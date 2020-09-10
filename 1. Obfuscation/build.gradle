@@ -3,7 +3,6 @@ plugins {
     id 'application'
 }
 
-//group 'org.stokirill'
 version '1.0-SNAPSHOT'
 
 repositories {
