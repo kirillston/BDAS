@@ -4,45 +4,40 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Obfuscator {
-    private static String source;
-    private static String target;
+    private final String source;
+    private final String target;
 
-    public Obfuscator(String source_alphabet_file, String target_alphabet_file) {
+    public Obfuscator(String source_alphabet_file, String target_alphabet_file) throws IOException{
         source = readAlphabet(source_alphabet_file);
         target = readAlphabet(target_alphabet_file);
-        try {
-            checkAlphabets(source, target);
-        } catch (IOException exception){
-            System.err.println(exception.getMessage());
-            exception.printStackTrace();
-        }
+        checkAlphabets(source, target);
     }
 
-    private static String readAlphabet (String alphabet_file) {
+    private static String readAlphabet (String alphabet_file) throws FileNotFoundException{
         String return_value = "";
-        try {
+        try{
             File srcFile = new File(alphabet_file);
             Scanner srcReader = new Scanner(srcFile);
             return_value = srcReader.nextLine();
             srcReader.close();
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred while reading alphabet file.");
-            e.printStackTrace();
+            throw new FileNotFoundException("An error occurred while reading alphabet file.");
         }
         return return_value;
     }
 
-    private static boolean checkAlphabets (String alpha1, String alpha2) throws IOException {
+    private static void checkAlphabets (String alpha1, String alpha2) throws IOException {
         int len1 = alpha1.length();
         int len2 = alpha2.length();
         if (len1 != len2) {
             String message = "Alphabets have different length: " + len1 + " and " + len2;
             throw new IOException(message);
         }
-        return checkAlphabetUniqueness(alpha1) && checkAlphabetUniqueness(alpha2);
+        checkAlphabetUniqueness(alpha1);
+        checkAlphabetUniqueness(alpha2);
     }
 
-    private static boolean checkAlphabetUniqueness(String alphabet) throws IOException{
+    private static void checkAlphabetUniqueness(String alphabet) throws IOException{
         int len = alphabet.length();
         for (int i=0; i < len; i++) {
             char first_symbol = alphabet.charAt(i);
@@ -54,7 +49,6 @@ public class Obfuscator {
                 }
             }
         }
-        return true;
     }
 
     public String obfuscate(String s) {

@@ -18,7 +18,7 @@ class ObfuscationHandler extends DefaultHandler {
 
     private static String filename;
 
-    public ObfuscationHandler(boolean obfuscate) {
+    public ObfuscationHandler(boolean obfuscate) throws IOException{
         out = new OutputStreamWriter(System.out, StandardCharsets.UTF_8);
         try {
             SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
