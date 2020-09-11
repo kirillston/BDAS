@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<cities>
+    <city id="0" name="London">
+        Hi!
+    </city>
+    <city id="1" name="Moscow">
+        Privet!
+    </city>
+    <city id="2" name="Paris">
+        Salut!
+    </city>
+    <city id= name="Pekin">
+        Nihao!
+    </city>
+</cities>

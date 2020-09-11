@@ -18,18 +18,16 @@ class ObfuscationHandler extends DefaultHandler {
 
     private static String filename;
 
-    public ObfuscationHandler(boolean obfuscate) throws IOException{
+    public ObfuscationHandler(boolean obfuscate) throws IOException, XMLStreamException{
         out = new OutputStreamWriter(System.out, StandardCharsets.UTF_8);
-        try {
-            SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-            Date date = new Date(System.currentTimeMillis());
-            filename = "src/main/resources/output-" + formatter.format(date) + ".xml";
-            fileWriter = new FileWriter(filename);
-            XMLOutputFactory xMLOutputFactory = XMLOutputFactory.newInstance();
-            xMLStreamWriter = xMLOutputFactory.createXMLStreamWriter(fileWriter);
-        } catch (XMLStreamException | IOException exception) {
-            exception.printStackTrace();
-        }
+
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        Date date = new Date(System.currentTimeMillis());
+        filename = "src/main/resources/output-" + formatter.format(date) + ".xml";
+        fileWriter = new FileWriter(filename);
+
+        XMLOutputFactory xMLOutputFactory = XMLOutputFactory.newInstance();
+        xMLStreamWriter = xMLOutputFactory.createXMLStreamWriter(fileWriter);
         if (obfuscate) {
             obfuscator = new Obfuscator("src/main/resources/alphabet.txt",
                     "src/main/resources/secret_alphabet.txt");
@@ -44,6 +42,7 @@ class ObfuscationHandler extends DefaultHandler {
             xMLStreamWriter.writeStartDocument();
             xMLStreamWriter.writeCharacters("\n");
         } catch (XMLStreamException exception) {
+            System.out.println("Error occurred while parsing the beginning of XML file");
             exception.printStackTrace();
         }
     }
@@ -56,6 +55,7 @@ class ObfuscationHandler extends DefaultHandler {
             fileWriter.close();
             System.out.println("Resulting XML is written in file: " + filename);
         } catch (XMLStreamException | IOException exception) {
+            System.out.println("Error occurred while parsing end of XML file");
             exception.printStackTrace();
         }
     }
@@ -71,6 +71,7 @@ class ObfuscationHandler extends DefaultHandler {
                 }
             }
         } catch (XMLStreamException exception) {
+            System.out.println("Error occurred while parsing element " + qName + " or its attributes");
             exception.printStackTrace();
         }
     }
@@ -80,6 +81,7 @@ class ObfuscationHandler extends DefaultHandler {
         try {
             xMLStreamWriter.writeEndElement();
         } catch (XMLStreamException exception) {
+            System.out.println("Error occurred while parsing end of " + qName + " element");
             exception.printStackTrace();
         }
     }
@@ -94,6 +96,7 @@ class ObfuscationHandler extends DefaultHandler {
                 xMLStreamWriter.writeCharacters(untrimmed_string);
             }
         } catch (XMLStreamException exception) {
+            System.out.println("Error occurred while parsing text " + untrimmed_string);
             exception.printStackTrace();
         }
     }
