@@ -9,7 +9,7 @@ Program works in two modes:
 
 If you process file in these two modes serially, you'll get initial file.
 
-##Usage
+## Usage
 
 ```bash
 gradle run args='[obfuscate/unobfuscate] [filepath]'
