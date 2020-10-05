@@ -24,7 +24,7 @@ public class SigningVerificationTests {
         byte[] rawData = testData.getBytes();
 
         byte[] signedData = signer.signData(rawData);
-        Boolean check = verifier.verifySignedData(signedData);
+        boolean check = verifier.verifySignedData(signedData);
         assertTrue(check);
     }
 }
