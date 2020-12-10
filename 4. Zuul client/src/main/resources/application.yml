@@ -1,0 +1,5 @@
+zuul:
+  routes:
+    foos:
+      path: /data/**
+      url: http://localhost:8082/rest-api/data
